@@ -2,6 +2,7 @@ import subprocess
 import argparse
 import psutil
 import logging
+import sys
 
 
 def parse_arguments():
@@ -70,7 +71,7 @@ def create_log_sys_trace(out, i, net_before):
     network packets received and sent before the command
     :return: the log string of the sys trace argument
     """
-    log_name = 'sys_trace_' + str(out.pid) + "_" + str(i) + '.log'
+    log_name = 'sys_trace_' + str(i) + '.log'
 
     cpu = out.cpu_percent()
     disk_io = out.io_counters()
@@ -196,9 +197,9 @@ def run_script():
     print("Number of executions succeeded: ", number_of_success_executions)
 
     if number_of_failed_executions > number_of_success_executions:
-        return number_of_failed_executions
+        return 1
 
-    return number_of_success_executions
+    return 0
 
 
 if __name__ == '__main__':
